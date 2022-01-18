@@ -1,0 +1,17 @@
+server:
+  port: 8010
+
+spring:
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem://localhost/~/me;DB_CLOSE_DELAY=-1
+    username: sa
+    password: 1234
+
+  jpa:
+    open-in-view: false
+    show-sql: true
+    database: postgresql
+    hibernate:
+      ddl-auto: update
+    generate-ddl: true
