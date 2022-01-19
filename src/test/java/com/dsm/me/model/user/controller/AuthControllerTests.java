@@ -38,9 +38,9 @@ public class AuthControllerTests {
     @Test
     @DisplayName("@Email Error Test: 이메일 형식을 갖추고 있어야 한다")
     public void emailExceptionJoinTest() throws Exception {
-        String content = objectMapper.writeValueAsString(new UserCreateRequestDto("email@naver","password1!", "nickname"));
+        String content = objectMapper.writeValueAsString(new UserCreateRequestDto("email.test","password1!", "nickname"));
 
-        mvc.perform(post("/auth")
+        mvc.perform(post("/users")
                 .content(content)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
@@ -52,7 +52,7 @@ public class AuthControllerTests {
     public void textPasswordJoinTest() throws Exception {
         String content = objectMapper.writeValueAsString(new UserCreateRequestDto("email@naver.com","password", "nickname"));
 
-        mvc.perform(post("/auth")
+        mvc.perform(post("/users")
                 .content(content)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
@@ -64,7 +64,7 @@ public class AuthControllerTests {
     public void nicknameLengthJoinTest() throws Exception {
         String content = objectMapper.writeValueAsString(new UserCreateRequestDto("email@naver.com","password1!", "가나다라마바사아자차카타파하갸냐댜랴먀뱌샤야쟈챠캬탸퍄햐"));
 
-        mvc.perform(post("/auth")
+        mvc.perform(post("/users")
                 .content(content)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
