@@ -1,11 +1,14 @@
 package com.dsm.me.model.user.controller;
 
 import com.dsm.me.model.user.dto.UserCreateRequestDto;
+import com.dsm.me.model.user.service.AuthService;
+import com.dsm.me.model.user.service.AuthServiceTests;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -17,13 +20,15 @@ public class AuthControllerTests {
     private MockMvc mvc;
     @Autowired
     private ObjectMapper objectMapper;
+    @MockBean
+    private AuthService authService;
 
     @Test
     @DisplayName("Join Success Test")
     public void joinTest() throws Exception {
         String content = objectMapper.writeValueAsString(new UserCreateRequestDto("email@naver.com","password1!", "nickname"));
 
-        mvc.perform(post("/auth")
+        mvc.perform(post("/users")
                 .content(content)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
