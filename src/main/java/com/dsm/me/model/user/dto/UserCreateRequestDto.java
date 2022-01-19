@@ -2,6 +2,7 @@ package com.dsm.me.model.user.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -18,6 +19,7 @@ public class UserCreateRequestDto {
     @NotBlank
     private final String password;
 
+    @Length(min = 1, max = 25)
     @NotBlank
     private final String nickname;
     // id
