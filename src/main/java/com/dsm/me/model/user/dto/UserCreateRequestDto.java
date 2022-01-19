@@ -14,7 +14,7 @@ public class UserCreateRequestDto {
     @NotBlank
     private final String email;
 
-    @Pattern(regexp = "(?=.*[0-9])(?=.*[a-z])(?=.*\\\\W)(?=\\\\S+$).{3,25}", message = "password는 영문 소문자, 특수기호, 숫자가 한 개 이상 포함되어야 합니다.")
+    @Pattern(regexp = "^(?=.*[a-z])(?=.*[0-9])(?=.*[#?!@$%^*&-]).{3,}$")
     @NotBlank
     private final String password;
 
