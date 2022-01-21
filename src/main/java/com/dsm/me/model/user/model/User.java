@@ -21,20 +21,26 @@ public class User {
     private String profile;
     private String backgroundHax;
 
-    public static String createRandomId(){
-        return "";
-    }
+    public static class Info{
+        public static String createRandomId(String email){
+            return email.charAt(0)+createUid().substring(0, (int) (Math.random() * 10));
+        }
 
-    public static String createRandomPassword(){
-        String uid = UUID.randomUUID().toString().replaceAll("-","");
-        return uid.substring(0,14)+randomSpecialChar();
-    }
+        public static String createRandomPassword(){
+            return createUid().substring(0,14)+randomSpecialChar();
+        }
 
-    private static String randomSpecialChar(){
-        String[] scArr = new String[]{
-                "!","@","#","$","%","^","&","*"
-        };
-        int selectRandomInt = (int) (Math.random()*(scArr.length));
-        return scArr[selectRandomInt];
+        private static String createUid(){
+            return UUID.randomUUID().toString().replaceAll("-","");
+        }
+
+        private static String randomSpecialChar(){
+            String[] scArr = new String[]{
+                    "!","@","#","$","%","^","&","*"
+            };
+            int selectRandomInt = (int) (Math.random()*(scArr.length));
+            return scArr[selectRandomInt];
+        }
+
     }
 }
