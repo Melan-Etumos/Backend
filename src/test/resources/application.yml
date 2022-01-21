@@ -15,3 +15,7 @@ spring:
     hibernate:
       ddl-auto: update
     generate-ddl: true
+
+user:
+  profile: TEST_PROFILE.com
+  hax: TESTH

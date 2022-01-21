@@ -12,9 +12,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class AuthService {
     @Value("${user.profile}")
-    private final String profile;
+    private String profile;
     @Value("${user.hax}")
-    private final String backgroundHax;
+    private String backgroundHax;
 
     private final UserRepository userRepository;
 
