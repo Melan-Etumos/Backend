@@ -6,6 +6,7 @@ import com.dsm.me.model.user.model.User;
 import com.dsm.me.model.user.model.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
@@ -17,6 +18,7 @@ public class AuthService {
     private String backgroundHax;
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public void join(UserCreateRequestDto userCreateDto){
         if(userRepository.existsById(userCreateDto.getEmail())){
@@ -26,9 +28,9 @@ public class AuthService {
         userRepository.save(
                 User.builder()
                         .email(userCreateDto.getEmail())
-                        .password(userCreateDto.getPassword())
+                        .password(passwordEncoder.encode(userCreateDto.getPassword()))
                         .nickname(userCreateDto.getNickname())
-                        .id(User.createRandomId())
+                        .id(User.Info.createRandomId(userCreateDto.getEmail()))
                         .profile(profile)
                         .backgroundHax(backgroundHax)
                         .build()
