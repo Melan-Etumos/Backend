@@ -12,6 +12,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Entity
 @Builder
+@Table(name = "tbl_user")
 public class User {
     @Id
     private String email;
