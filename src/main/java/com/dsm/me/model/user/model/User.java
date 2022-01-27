@@ -24,7 +24,7 @@ public class User {
 
     public static class Info{
         public static String createRandomId(String email){
-            return email.charAt(0)+createUid().substring(0, (int) (Math.random() * 10));
+            return email.charAt(0)+createUid().substring(0, 10)+ createUid().substring(0, (int) (Math.random() * 10));
         }
 
         public static String createRandomPassword(){
