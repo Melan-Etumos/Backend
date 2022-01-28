@@ -3,11 +3,14 @@ package com.dsm.me.model.user.model;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
+@EntityListeners(AuditingEntityListener.class)
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -20,7 +23,12 @@ public class User {
     private String nickname;
     private String id;
     private String profile;
+    @Column(name = "background")
     private String backgroundHax;
+    @CreatedDate
+    @Column(name = "created_date")
+    private LocalDateTime createdDate;
+
 
     public static class Info{
         public static String createRandomId(String email){
