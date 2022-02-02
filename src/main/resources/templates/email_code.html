@@ -1,36 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <style>
-        body {
-            margin: 0;
-        }
-        .linear-gradient {
-            background: linear-gradient(#303050, white);
-        }
-        .code-box {
-            width: 50%;
+</head>
+<body style="margin: 0">
+ <div style="background: linear-gradient(#303050, white)">
+     <br>
+     <div style="color:white; margin: 30px; padding-left: 30px">
+     <h1>환영합니다, Melan의 회원가입 인증 코드입니다.</h1>
+     <h2>Melan을 이용해 주셔서 진심으로 감사드립니다.</h2>
+     <h2>홈페이지도 돌아가 아래 코드를 입력해 회원가입을 완료해 주세요.</h2>
+     <h2>감사합니다.</h2>
+     </div>
+     <br>
+     <div style="margin-left: 62px;
+            margin-top: -20px; width: 50%;
             text-align: center;
             border-bottom: solid rebeccapurple;
             padding: 30px;
-            background: white;
-        }
-    </style>
-</head>
-<body>
- <div class="linear-gradient">
-     <br>
-     <div style="color:white; margin: 30px; padding-left: 30px" >
-     <h2>환영합니다, Melan의 회원가입 인증 코드입니다.</h2>
-     <h3>Melan을 이용해 주셔서 진심으로 감사드립니다.</h3>
-     <h3>홈페이지도 돌아가 아래 코드를 입력해 회원가입을 완료해 주세요.</h3>
-     <h3>감사합니다.</h3>
-     </div>
-     <br>
-     <div class="code-box" style="margin-left: 62px; margin-top: -20px">
-         <h1>${code}</h1>
+            background: white;">
+         <h1 th:text="${code}">code</h1>
      </div>
  </div>
 </body>
