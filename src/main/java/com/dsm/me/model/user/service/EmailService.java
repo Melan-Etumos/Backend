@@ -21,7 +21,7 @@ public class EmailService {
     @Async
     public void sendEmailCode(String email) throws MessagingException {
         mailHandler.setSenderAndReceiver(MailReceiver.builder().email(email).build());
-        mailHandler.setMailMessage(createMailContent());
+        mailHandler.setMailContent(createMailContent());
         mailHandler.sendMail();
     }
 
