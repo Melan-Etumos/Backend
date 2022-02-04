@@ -1,22 +1,24 @@
 package com.dsm.me.model.user.controller;
 
-import org.springframework.beans.factory.annotation.Value;
+import com.dsm.me.model.user.service.EmailService;
+import lombok.RequiredArgsConstructor;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import javax.validation.constraints.Email;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/email")
 public class EmailController {
-    @Value("${email.send}")
-    private String sendFrom;
 
+    private final EmailService emailService;
+
+    @ResponseStatus(HttpStatus.ACCEPTED)
     @GetMapping
-    public void sendEmailCode(@RequestParam @Email String email){
-        String title = "Melan Etumos 회원가입 인증 이메일";
+    public void sendEmailCode(@RequestParam @Email String email) throws MessagingException {
+        emailService.sendEmailCode(email);
     }
 }
