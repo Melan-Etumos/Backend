@@ -18,17 +18,25 @@ public class EmailService {
     private final MailHandler mailHandler;
     private final SpringTemplateEngine templateEngine;
 
-    @Async // 비동기기
-   public void sendEmailCode(String email) throws MessagingException {
-        final String title = "Melan Etumos 회원가입 인증 메일입니다.";
-        Context context = new Context();
-        context.setVariable("code",createEmailCode());
-        String html = templateEngine.process("email_code", context);
+    @Async
+    public void sendEmailCode(String email) throws MessagingException {
         mailHandler.setSenderAndReceiver(MailReceiver.builder().email(email).build());
-        mailHandler.setMailMessage(MailContent.builder().content(html).title(title).build());
+        mailHandler.setMailMessage(createMailContent());
         mailHandler.sendMail();
     }
 
+    public MailContent createMailContent(){
+        final String title = "Melan Etumos 회원가입 인증 메일입니다.";
+
+        Context context = new Context();
+        context.setVariable("code",createEmailCode());
+        return MailContent.builder().content(templateEngine.process("email_code", context)).title(title).build();
+    }
+
+    private int createEmailCode(){
+        final int len = 6;
+
+        StringBuilder id= new StringBuilder();
 
     }
 
