@@ -33,12 +33,8 @@ public class EmailService {
         return MailContent.builder().content(templateEngine.process("email_code", context)).title(title).build();
     }
 
-    private int createEmailCode(){
-        final int len = 6;
-
-        StringBuilder id= new StringBuilder();
-
+    private String createEmailCode(){
+        Random random = new Random();
+        return Integer.toString(random.nextInt(999999));
     }
-
-
 }
