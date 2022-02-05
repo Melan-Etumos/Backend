@@ -23,23 +23,28 @@ public class EmailService {
 
     @Async
     public void sendEmailCode(final String email) throws MessagingException {
+        final String code = createEmailCode();
+        emailCodeSave(Code.builder().email(email).code(code).build());
+
         mailHandler.setSenderAndReceiver(MailReceiver.builder().email(email).build());
-        mailHandler.setMailContent(createMailContent(email));
+        mailHandler.setMailContent(createMailContent(code));
         mailHandler.sendMail();
     }
 
-    public MailContent createMailContent(String email){
+    public MailContent createMailContent(String code){
         final String title = "Melan Etumos 회원가입 인증 메일입니다.";
 
         Context context = new Context();
-        context.setVariable("code",createEmailCodeAndSave(email));
+        context.setVariable("code",code);
         return MailContent.builder().content(templateEngine.process("email_code", context)).title(title).build();
     }
 
-    private String createEmailCodeAndSave(String email){
+    private String createEmailCode(){
         Random random = new Random();
-        String code = Integer.toString(random.nextInt(999999));
-        codeRepository.save(Code.builder().email(email).code(code).build());
-        return code;
+        return Integer.toString(random.nextInt(999999));
+    }
+
+    private void emailCodeSave(Code code){
+        codeRepository.save(code);
     }
 }
