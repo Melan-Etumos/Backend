@@ -6,9 +6,8 @@ import org.springframework.data.redis.core.RedisHash;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-// 캐시
 @Entity // 엔티티를 안붙이면오류남
-@RedisHash("code")
+@RedisHash(value = "code", timeToLive = 3000)
 @Getter
 @Builder
 @ToString
