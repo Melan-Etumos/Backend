@@ -1,5 +1,6 @@
 package com.dsm.me.model.user.controller;
 
+import com.dsm.me.model.user.dto.CodeCheckRequestDto;
 import com.dsm.me.model.user.service.EmailService;
 import lombok.RequiredArgsConstructor;
 
@@ -20,5 +21,10 @@ public class EmailController {
     @GetMapping
     public void sendEmailCode(@RequestParam @Email String email) throws MessagingException {
         emailService.sendEmailCode(email);
+    }
+
+    @PostMapping("/{email}")
+    public boolean verificationCodeCheck(@PathVariable @Email final String email, @RequestBody final CodeCheckRequestDto dto){
+        return emailService.verificationCodeCheck(email, dto.getCode());
     }
 }
