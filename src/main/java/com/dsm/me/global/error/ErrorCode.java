@@ -7,7 +7,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum ErrorCode {
     USER_NOT_FOUND(404, "User not found"),
-    EMAIL_OVERLAP(409,"Email Overlap");
+    EMAIL_OVERLAP(409,"Email Overlap"),
+    SAVE_CODE_NOT_FOUND(404, "Save code not found");
 
     private final int code;
     private final String message;
