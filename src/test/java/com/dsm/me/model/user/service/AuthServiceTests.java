@@ -1,6 +1,6 @@
 package com.dsm.me.model.user.service;
 
-import com.dsm.me.global.exception.EmailOverlapException;
+import com.dsm.me.global.error.exceptions.EmailOverlapException;
 import com.dsm.me.model.user.dto.UserCreateRequestDto;
 import com.dsm.me.model.user.model.User;
 import com.dsm.me.model.user.model.UserRepository;

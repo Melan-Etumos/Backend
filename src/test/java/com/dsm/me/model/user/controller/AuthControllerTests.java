@@ -2,7 +2,6 @@ package com.dsm.me.model.user.controller;
 
 import com.dsm.me.model.user.dto.UserCreateRequestDto;
 import com.dsm.me.model.user.service.AuthService;
-import com.dsm.me.model.user.service.AuthServiceTests;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
