@@ -9,6 +9,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
@@ -22,11 +24,16 @@ public class EmailServiceTests {
     @InjectMocks
     EmailService emailService;
 
+    private final String email = "test@naver.com";
+    private final String code = "000000";
+
     @Test
     @DisplayName("이메일 인증 코드 확인 성공")
     public void verificationCodeCheckTest(){
-        given(codeRepository.existsByEmailAndCode(any(), any())).willReturn(true);
-        boolean check = emailService.verificationCodeCheck(Code.builder().email("email@naver.com").code("000000").build());
+        Optional<Code> returnCode = Optional.ofNullable(Code.builder().code(code).email(email).build());
+
+        given(codeRepository.findById(any())).willReturn(returnCode);
+        boolean check = emailService.verificationCodeCheck(email, code);
 
         assertTrue(check);
     }
@@ -34,8 +41,10 @@ public class EmailServiceTests {
     @Test
     @DisplayName("이메일 인증 코드 확인 실패")
     public void verificationCodeCheckFailTest(){
-        given(codeRepository.existsByEmailAndCode(any(), any())).willReturn(false);
-        boolean check = emailService.verificationCodeCheck(Code.builder().email("email@naver.com").code("000000").build());
+        Optional<Code> returnCode = Optional.ofNullable(Code.builder().code("000001").email(email).build());
+
+        given(codeRepository.findById(any())).willReturn(returnCode);
+        boolean check = emailService.verificationCodeCheck(email, code);
 
         assertFalse(check);
     }
