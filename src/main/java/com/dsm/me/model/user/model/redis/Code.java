@@ -1,12 +1,11 @@
 package com.dsm.me.model.user.model.redis;
 
 import lombok.*;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.validation.constraints.Email;
 
-@Entity // 엔티티를 안붙이면오류남
 @RedisHash(value = "code", timeToLive = 3000)
 @Getter
 @Builder
@@ -14,7 +13,7 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Code {
-    @Id
+    @Id @Email
     private String email;
 
     private String code;
