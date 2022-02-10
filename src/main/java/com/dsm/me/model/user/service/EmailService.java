@@ -55,4 +55,9 @@ public class EmailService {
     private void emailCodeSave(Code code){
         codeRepository.save(code);
     }
+
+    public boolean verificationCodeCheck(String email, String userInputCode){
+        return codeRepository.findById(email).orElseThrow(SaveCodeNotFoundException::new)
+                .getCode().equals(userInputCode);
+    }
 }
