@@ -1,11 +1,9 @@
 package com.dsm.me.model.user.service;
 
-import com.dsm.me.global.error.exceptions.EmailOverlapException;
 import com.dsm.me.global.error.exceptions.SaveCodeNotFoundException;
 import com.dsm.me.global.mail.MailContent;
 import com.dsm.me.global.mail.MailHandler;
 import com.dsm.me.global.mail.MailReceiver;
-import com.dsm.me.model.user.model.UserRepository;
 import com.dsm.me.model.user.model.redis.Code;
 import com.dsm.me.model.user.model.redis.EmailCodeRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,14 +21,9 @@ public class EmailService {
     private final MailHandler mailHandler;
     private final SpringTemplateEngine templateEngine;
     private final EmailCodeRepository codeRepository;
-    private final UserRepository userRepository;
 
     @Async
     public void sendEmailCode(final String email) throws MessagingException {
-        if (userRepository.existsById(email)){
-            throw new EmailOverlapException();
-        }
-
         final String code = createEmailCode();
         emailCodeSave(Code.builder().email(email).code(code).build());
 
