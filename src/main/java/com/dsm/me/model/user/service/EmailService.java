@@ -60,4 +60,8 @@ public class EmailService {
         return codeRepository.findById(email).orElseThrow(SaveCodeNotFoundException::new)
                 .getCode().equals(userInputCode);
     }
+
+    public void findPassword(String email, String id){
+
+    }
 }
