@@ -1,5 +1,6 @@
 package com.dsm.me.model.user.service;
 
+import com.dsm.me.global.error.exceptions.EmailNotMatchIdException;
 import com.dsm.me.global.error.exceptions.EmailOverlapException;
 import com.dsm.me.model.user.dto.UserCreateRequestDto;
 import com.dsm.me.model.user.model.User;
@@ -11,6 +12,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
@@ -27,6 +30,9 @@ public class AuthServiceTests {
 
     @InjectMocks
     private AuthService authService;
+
+    private final String email = "test@naver.com";
+    private final String id = "test_id";
 
     @Test
     @DisplayName("Join Success")
@@ -48,6 +54,24 @@ public class AuthServiceTests {
 
         assertThrows(EmailOverlapException.class, ()->
             authService.join(userCreateDto)
+        );
+    }
+
+    @Test
+    @DisplayName("비밀번호 찾기 성공")
+    public void findPasswordSuccessTest() {
+        Optional<User> returnUser = Optional.ofNullable(User.builder().email(email).password("test").id(id).build());
+        given(userRepository.findById(any())).willReturn(returnUser);
+        authService.findPassword(email, id);
+    }
+
+    @Test
+    @DisplayName("비밀번호 찾기 실패")
+    public void findPasswordFailTest() {
+        Optional<User> returnUser = Optional.ofNullable(User.builder().email(email).password("test").id(id).build());
+        given(userRepository.findById(any())).willReturn(returnUser);
+        assertThrows(EmailNotMatchIdException.class, () ->
+                authService.findPassword(email, "test_not_id")
         );
     }
 }

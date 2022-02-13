@@ -7,7 +7,6 @@ import com.dsm.me.global.error.exceptions.UserNotFoundException;
 import com.dsm.me.global.mail.MailContent;
 import com.dsm.me.global.mail.MailHandler;
 import com.dsm.me.global.mail.MailReceiver;
-import com.dsm.me.model.user.model.User;
 import com.dsm.me.model.user.model.UserRepository;
 import com.dsm.me.model.user.model.redis.Code;
 import com.dsm.me.model.user.model.redis.EmailCodeRepository;
@@ -62,12 +61,5 @@ public class EmailService {
     public boolean verificationCodeCheck(String email, String userInputCode){
         return codeRepository.findById(email).orElseThrow(SaveCodeNotFoundException::new)
                 .getCode().equals(userInputCode);
-    }
-
-    // 메서드 이름이 좀 이상한데?
-    public void findPassword(String email, String userInputId){
-        String id = userRepository.findById(email).orElseThrow(UserNotFoundException::new).getId();
-        if(!userInputId.equals(id)) throw new EmailNotMatchIdException();
-        // 메일읇 보내는거고
     }
 }

@@ -25,7 +25,7 @@ public class AuthController {
     @ResponseStatus(HttpStatus.ACCEPTED)
     @GetMapping("/password")
     public void findPassword(@RequestParam @Email final String email, @RequestParam final String id){
-        emailService.findPassword(email, id);
+        authService.findPassword(email, id);
     }
 
 }
