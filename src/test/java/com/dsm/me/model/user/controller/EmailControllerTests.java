@@ -62,14 +62,4 @@ public class EmailControllerTests {
                 .andExpect(status().isBadRequest());
     }
 
-    @Test
-    @DisplayName("비밀번호 찾기 테스트")
-    public void passwordFind() throws Exception {
-        final String email = "test@naver.com";
-        final String id = "test_id";
-        MultiValueMap<String, String> info = new LinkedMultiValueMap<>();
-        info.add("email",email);
-        info.add("id",id);
-        mvc.perform(get("/password").params(info)).andExpect(status().isAccepted());
-    }
 }

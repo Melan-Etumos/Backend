@@ -10,6 +10,10 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -68,5 +72,16 @@ public class AuthControllerTests {
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @DisplayName("비밀번호 찾기 테스트")
+    public void passwordFind() throws Exception {
+        final String email = "test@naver.com";
+        final String id = "test_id";
+        MultiValueMap<String, String> info = new LinkedMultiValueMap<>();
+        info.add("email",email);
+        info.add("id",id);
+        mvc.perform(get("/password").params(info)).andExpect(status().isAccepted());
     }
 }
