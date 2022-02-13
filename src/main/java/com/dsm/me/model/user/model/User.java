@@ -2,6 +2,7 @@ package com.dsm.me.model.user.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -10,12 +11,13 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+@Getter
 @EntityListeners(AuditingEntityListener.class)
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Builder
-@Table(name = "tbl_user")
+@Table(name = "users")
 public class User {
     @Id
     private String email;
@@ -28,6 +30,10 @@ public class User {
     @CreatedDate
     @Column(name = "created_date")
     private LocalDateTime createdDate;
+
+    public void changePassword(String password){
+        this.password = password;
+    }
 
 
     public static class Info{

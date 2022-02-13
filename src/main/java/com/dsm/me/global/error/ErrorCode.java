@@ -9,7 +9,8 @@ public enum ErrorCode {
     USER_NOT_FOUND(404, "User not found"),
     EMAIL_OVERLAP(409,"Email Overlap"),
     SAVE_CODE_NOT_FOUND(404, "Save code not found"),
-    EMAIL_NOT_MATCH_ID(404, "Email not match Id");
+    EMAIL_NOT_MATCH_ID(404, "Email not match Id"),
+    EMAIL_DOSE_NOT_SEND(400, "Email doesn't send");
 
     private final int code;
     private final String message;
