@@ -2,6 +2,7 @@ package com.dsm.me.model.user.service;
 
 import com.dsm.me.global.error.exceptions.EmailNotMatchIdException;
 import com.dsm.me.global.error.exceptions.EmailOverlapException;
+import com.dsm.me.global.mail.MailHandler;
 import com.dsm.me.model.user.dto.UserCreateRequestDto;
 import com.dsm.me.model.user.model.User;
 import com.dsm.me.model.user.model.UserRepository;
@@ -28,16 +29,19 @@ public class AuthServiceTests {
     @Mock
     private PasswordEncoder passwordEncoder;
 
+    @Mock
+    private MailHandler mailHandler;
+
     @InjectMocks
     private AuthService authService;
 
     private final String email = "test@naver.com";
-    private final String id = "test_id";
+    private String id = "test_id";
 
     @Test
     @DisplayName("Join Success")
     public void join(){
-        UserCreateRequestDto userCreateDto = new UserCreateRequestDto("email@naver","password1!", "nickname");
+        UserCreateRequestDto userCreateDto = new UserCreateRequestDto(email,"password1!", "nickname");
 
         given(userRepository.existsById(any())).willReturn(false);
         given(userRepository.save(any())).willReturn(User.builder().build());
