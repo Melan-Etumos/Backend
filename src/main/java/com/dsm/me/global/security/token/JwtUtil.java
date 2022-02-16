@@ -1,5 +1,7 @@
 package com.dsm.me.global.security.token;
 
+import com.dsm.me.model.user.model.redis.RefreshToken;
+import com.dsm.me.model.user.model.redis.RefreshTokenRepository;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +17,8 @@ public class JwtUtil {
     @Value("{auth.jwt.secret}")
     private String secretKey;
 
+    private final RefreshTokenRepository tokenRepository;
+
     public String createAccessToken(String email) {
         return Jwts.builder()
                 .setIssuedAt(new Date())
@@ -26,12 +30,16 @@ public class JwtUtil {
     }
 
     public String createRefreshToken(String email) {
-        return Jwts.builder()
+        String refreshToken =  Jwts.builder()
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis()+30*1000))
                 .setSubject(email)
                 .claim("type","refresh")
                 .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
+
+        tokenRepository.save(RefreshToken.builder().email(email).refreshToken(refreshToken).build());
+
+        return refreshToken;
     }
 }
