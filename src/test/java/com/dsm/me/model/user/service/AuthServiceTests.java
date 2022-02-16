@@ -3,7 +3,9 @@ package com.dsm.me.model.user.service;
 import com.dsm.me.global.error.exceptions.EmailNotMatchIdException;
 import com.dsm.me.global.error.exceptions.EmailOverlapException;
 import com.dsm.me.global.mail.MailHandler;
+import com.dsm.me.model.user.dto.TokenResponseDto;
 import com.dsm.me.model.user.dto.UserCreateRequestDto;
+import com.dsm.me.model.user.dto.UserLoginRequestDto;
 import com.dsm.me.model.user.model.User;
 import com.dsm.me.model.user.model.UserRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -16,7 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 
@@ -77,5 +79,18 @@ public class AuthServiceTests {
         assertThrows(EmailNotMatchIdException.class, () ->
                 authService.findPassword(email, "test_not_id")
         );
+    }
+
+    @Test
+    @DisplayName("로그인 성공")
+    public void loginTest(){
+        final String password = "test!1";
+
+        Optional<User> returnUser = Optional.ofNullable(User.builder().email(email).password(password).id(id).build());
+        given(userRepository.findById(any())).willReturn(returnUser);
+
+        TokenResponseDto res = authService.login(new UserLoginRequestDto(email, password));
+
+        assertNotNull(res);
     }
 }

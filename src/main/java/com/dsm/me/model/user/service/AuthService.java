@@ -7,7 +7,9 @@ import com.dsm.me.global.error.exceptions.UserNotFoundException;
 import com.dsm.me.global.mail.MailContent;
 import com.dsm.me.global.mail.MailHandler;
 import com.dsm.me.global.mail.MailReceiver;
+import com.dsm.me.model.user.dto.TokenResponseDto;
 import com.dsm.me.model.user.dto.UserCreateRequestDto;
+import com.dsm.me.model.user.dto.UserLoginRequestDto;
 import com.dsm.me.model.user.model.User;
 import com.dsm.me.model.user.model.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +33,7 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final MailHandler mailHandler;
 
-    public void join(UserCreateRequestDto userCreateDto){
+    public void join(UserCreateRequestDto userCreateDto) {
         if(userRepository.existsById(userCreateDto.getEmail())){
             throw new EmailOverlapException();
         }
@@ -48,10 +50,14 @@ public class AuthService {
         );
     }
 
+    public TokenResponseDto login(UserLoginRequestDto dto) {
+        return new TokenResponseDto();
+    }
+
     @Async
     @Transactional
     // 메서드 이름이 좀 이상한데?
-    public void findPassword(String email, String userInputId){
+    public void findPassword(String email, String userInputId) {
         final String title = "Melan Etumos 변경된 비밀번호 입니다.";
 
         User user = userRepository.findById(email).orElseThrow(UserNotFoundException::new);
