@@ -1,7 +1,9 @@
 package com.dsm.me.model.user.controller;
 
 import com.dsm.me.model.user.dto.UserCreateRequestDto;
+import com.dsm.me.model.user.dto.UserLoginRequestDto;
 import com.dsm.me.model.user.service.AuthService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -83,5 +85,29 @@ public class AuthControllerTests {
         info.add("email",email);
         info.add("id",id);
         mvc.perform(get("/password").params(info)).andExpect(status().isAccepted());
+    }
+
+    @Test
+    @DisplayName("로그인ㅋ.ㅋ")
+    public void loginSuccessTest() throws Exception {
+        String content = objectMapper.writeValueAsString(new UserLoginRequestDto("email@naver.com","password1!"));
+
+        mvc.perform(post("/auth")
+                .content(content)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @DisplayName("로그인ㅋ.ㅋ 실패: 비밀번호 형식 일치하지 않음")
+    public void loginFailedTest() throws Exception {
+        String content = objectMapper.writeValueAsString(new UserLoginRequestDto("email@naver.com","password1"));
+
+        mvc.perform(post("/auth")
+                .content(content)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
     }
 }
