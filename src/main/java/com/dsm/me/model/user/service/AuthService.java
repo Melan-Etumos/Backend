@@ -1,12 +1,10 @@
 package com.dsm.me.model.user.service;
 
-import com.dsm.me.global.error.exceptions.EmailNotMatchIdException;
-import com.dsm.me.global.error.exceptions.EmailOverlapException;
-import com.dsm.me.global.error.exceptions.EmailSendException;
-import com.dsm.me.global.error.exceptions.UserNotFoundException;
+import com.dsm.me.global.error.exceptions.*;
 import com.dsm.me.global.mail.MailContent;
 import com.dsm.me.global.mail.MailHandler;
 import com.dsm.me.global.mail.MailReceiver;
+import com.dsm.me.global.security.token.JwtUtil;
 import com.dsm.me.model.user.dto.TokenResponseDto;
 import com.dsm.me.model.user.dto.UserCreateRequestDto;
 import com.dsm.me.model.user.dto.UserLoginRequestDto;
@@ -30,6 +28,7 @@ public class AuthService {
     private String backgroundHax;
 
     private final UserRepository userRepository;
+    private final JwtUtil jwtUtil;
     private final PasswordEncoder passwordEncoder;
     private final MailHandler mailHandler;
 
@@ -51,7 +50,14 @@ public class AuthService {
     }
 
     public TokenResponseDto login(UserLoginRequestDto dto) {
-        return new TokenResponseDto();
+        User user = userRepository.findById(dto.getEmail()).orElseThrow(UserNotFoundException::new);
+        if (!user.getPassword().equals(passwordEncoder.encode(dto.getPassword()))){
+            throw new EmailNotMatchPasswordException();
+        }
+
+        return TokenResponseDto.builder()
+                .accessToken(jwtUtil.createAccessToken(dto.getEmail()))
+                .refreshToken(jwtUtil.createRefreshToken(dto.getEmail())).build();
     }
 
     @Async
