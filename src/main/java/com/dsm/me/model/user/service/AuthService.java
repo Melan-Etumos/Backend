@@ -51,7 +51,7 @@ public class AuthService {
 
     public TokenResponseDto login(UserLoginRequestDto dto) {
         User user = userRepository.findById(dto.getEmail()).orElseThrow(UserNotFoundException::new);
-        if (!user.getPassword().equals(passwordEncoder.encode(dto.getPassword()))){
+        if (!passwordEncoder.matches(dto.getPassword(),user.getPassword())){
             throw new EmailNotMatchPasswordException();
         }
 

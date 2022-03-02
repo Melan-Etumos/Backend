@@ -32,7 +32,7 @@ public class JwtUtil {
     public String createRefreshToken(String email) {
         String refreshToken =  Jwts.builder()
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis()+30*1000))
+                .setExpiration(new Date(System.currentTimeMillis()+30000*10000))
                 .setSubject(email)
                 .claim("type","refresh")
                 .signWith(SignatureAlgorithm.HS256, secretKey)
