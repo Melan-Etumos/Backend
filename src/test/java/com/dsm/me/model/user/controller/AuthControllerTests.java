@@ -3,7 +3,6 @@ package com.dsm.me.model.user.controller;
 import com.dsm.me.model.user.dto.UserCreateRequestDto;
 import com.dsm.me.model.user.dto.UserLoginRequestDto;
 import com.dsm.me.model.user.service.AuthService;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -55,7 +54,7 @@ public class AuthControllerTests {
     @Test
     @DisplayName("Password Error Test: 숫자와 특수문자가 하나 이상 들어가야 한다")
     public void textPasswordJoinTest() throws Exception {
-        String content = objectMapper.writeValueAsString(new UserCreateRequestDto("email@naver.com","password", "nickname"));
+        String content = objectMapper.writeValueAsString(new UserCreateRequestDto("email@naver.com","password1", "nickname"));
 
         mvc.perform(post("/users")
                 .content(content)

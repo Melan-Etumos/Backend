@@ -16,7 +16,6 @@ import javax.validation.constraints.Email;
 @RestController
 public class AuthController {
     private final AuthService authService;
-    private final EmailService emailService;
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/users")
@@ -25,7 +24,7 @@ public class AuthController {
     }
 
     @PostMapping("/auth")
-    public TokenResponseDto login(@RequestBody UserLoginRequestDto loginRequestDto){
+    public TokenResponseDto login(@RequestBody @Valid UserLoginRequestDto loginRequestDto){
         return authService.login(loginRequestDto);
     }
 
