@@ -24,6 +24,7 @@ jobs:
         shell: bash
 
       - name: Build with Gradle
+        run: ./gradlew build
         env:
           USER_PROFILE: ${{secrets.USER_PROFILE}}
           REDIS_HOST: ${{secrets.REDIS_HOST}}
@@ -31,5 +32,4 @@ jobs:
           EMAIL: ${{secrets.EMAIL}}
           EMAIL_PASSWORD: ${secrets.EMAIL_PASSWORD}
           JWT_SECRET_KEY: ${secrets.JWT_SECRET_KEY}
-        run: ./gradlew build
         shell: bash
