@@ -15,7 +15,27 @@ spring:
     hibernate:
       ddl-auto: update
     generate-ddl: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${EMAIL:}
+    password: ${EMAIL_PASSWORD:}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+  redis:
+    host: ${REDIS_HOST:local}
+    password: ${REDIS_PASSWORD:}
+
 
 user:
-  profile: TEST_PROFILE.com
-  hax: TESTH
+  profile: ${USER_PROFILE:test.com}
+  hax: ${H_BASIC:000000}
+
+auth:
+  jwt:
+    secret: ${JWT_SECRET_KEY:fakseaGb-AFdsjk}
+    header: BEAREA
