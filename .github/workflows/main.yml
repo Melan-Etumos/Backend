@@ -30,10 +30,11 @@ jobs:
           REDIS_HOST: ${{secrets.REDIS_HOST}}
           REDIS_PASSWORD: ${{secrets.REDIS_PASSWORD}}
           EMAIL: ${{secrets.EMAIL}}
-          EMAIL_PASSWORD: ${secrets.EMAIL_PASSWORD}
-          JWT_SECRET_KEY: ${secrets.JWT_SECRET_KEY}
+          EMAIL_PASSWORD: ${{secrets.EMAIL_PASSWORD}}
+          JWT_SECRET_KEY: ${{secrets.JWT_SECRET_KEY}}
         shell: bash
-      - name: Configure AWS credentials
+        
+      - name: AWS Setting
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
