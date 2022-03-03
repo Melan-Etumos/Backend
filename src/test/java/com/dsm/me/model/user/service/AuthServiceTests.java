@@ -3,6 +3,7 @@ package com.dsm.me.model.user.service;
 import com.dsm.me.global.error.exceptions.EmailNotMatchIdException;
 import com.dsm.me.global.error.exceptions.EmailOverlapException;
 import com.dsm.me.global.mail.MailHandler;
+import com.dsm.me.global.security.token.JwtUtil;
 import com.dsm.me.model.user.dto.TokenResponseDto;
 import com.dsm.me.model.user.dto.UserCreateRequestDto;
 import com.dsm.me.model.user.dto.UserLoginRequestDto;
@@ -33,6 +34,9 @@ public class AuthServiceTests {
 
     @Mock
     private MailHandler mailHandler;
+
+    @Mock
+    private JwtUtil jwtUtil;
 
     @InjectMocks
     private AuthService authService;
@@ -85,9 +89,11 @@ public class AuthServiceTests {
     @DisplayName("로그인 성공")
     public void loginTest(){
         final String password = "test!1";
+        final String encodePassword = passwordEncoder.encode(password);
 
-        Optional<User> returnUser = Optional.ofNullable(User.builder().email(email).password(password).id(id).build());
+        Optional<User> returnUser = Optional.ofNullable(User.builder().email(email).password(encodePassword).id(id).build());
         given(userRepository.findById(any())).willReturn(returnUser);
+        given(passwordEncoder.matches(password, encodePassword)).willReturn(true);
 
         TokenResponseDto res = authService.login(new UserLoginRequestDto(email, password));
 
