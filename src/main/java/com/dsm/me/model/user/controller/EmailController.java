@@ -5,6 +5,7 @@ import com.dsm.me.model.user.service.EmailService;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
@@ -12,6 +13,7 @@ import javax.validation.constraints.Email;
 
 @RequiredArgsConstructor
 @RestController
+@Validated
 @RequestMapping("/email")
 public class EmailController {
 
