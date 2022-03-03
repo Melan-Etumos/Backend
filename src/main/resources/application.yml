@@ -5,7 +5,8 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/me
     username: postgres
-    password: ${PASSWORD:}
+    password: ${PASSWORD:lje0818ovo}
+
 
   jpa:
     show-sql: true
@@ -25,7 +26,16 @@ spring:
           auth: true
           starttls:
             enable: true
+  redis:
+    host: ${REDIS_HOST:}
+    password: ${REDIS_PASSWORD}
 
 user:
-  profile: ${P_BASIC:}
+  profile: ${USER_PROFILE:}
   hax: ${H_BASIC:}
+
+
+auth:
+  jwt:
+    secret: ${JWT_SECRET_KEY:}
+    header: BEAREA
