@@ -3,9 +3,9 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/me
-    username: postgres
-    password: ${PASSWORD:lje0818ovo}
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/me}
+    username: ${DATABSE_USER:}
+    password: ${DATABASE_PASSWORD:}
 
 
   jpa:
