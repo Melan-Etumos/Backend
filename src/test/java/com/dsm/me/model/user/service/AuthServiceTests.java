@@ -5,10 +5,10 @@ import com.dsm.me.global.error.exceptions.EmailOverlapException;
 import com.dsm.me.global.mail.MailHandler;
 import com.dsm.me.global.security.token.JwtUtil;
 import com.dsm.me.model.user.dto.TokenResponseDto;
-import com.dsm.me.model.user.dto.UserCreateRequestDto;
-import com.dsm.me.model.user.dto.UserLoginRequestDto;
-import com.dsm.me.model.user.model.User;
-import com.dsm.me.model.user.model.UserRepository;
+import com.dsm.me.model.user.dto.MemberCreateRequestDto;
+import com.dsm.me.model.user.dto.MemberLoginRequestDto;
+import com.dsm.me.model.user.model.Member;
+import com.dsm.me.model.user.model.MemberRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,7 +27,7 @@ import static org.mockito.BDDMockito.given;
 @ExtendWith(MockitoExtension.class)
 public class AuthServiceTests {
     @Mock
-    private UserRepository userRepository;
+    private MemberRepository memberRepository;
 
     @Mock
     private PasswordEncoder passwordEncoder;
@@ -47,10 +47,10 @@ public class AuthServiceTests {
     @Test
     @DisplayName("Join Success")
     public void join(){
-        UserCreateRequestDto userCreateDto = new UserCreateRequestDto(email,"password1!", "nickname");
+        MemberCreateRequestDto userCreateDto = new MemberCreateRequestDto(email,"password1!", "nickname");
 
-        given(userRepository.existsById(any())).willReturn(false);
-        given(userRepository.save(any())).willReturn(User.builder().build());
+        given(memberRepository.existsById(any())).willReturn(false);
+        given(memberRepository.save(any())).willReturn(Member.builder().build());
 
         authService.join(userCreateDto);
     }
@@ -58,9 +58,9 @@ public class AuthServiceTests {
     @Test
     @DisplayName("Join Failed - Email overlap")
     public void emailOverlapJoinFail(){
-        UserCreateRequestDto userCreateDto = new UserCreateRequestDto("email@naver","password1!", "nickname");
+        MemberCreateRequestDto userCreateDto = new MemberCreateRequestDto("email@naver","password1!", "nickname");
 
-        given(userRepository.existsById(any())).willReturn(true);
+        given(memberRepository.existsById(any())).willReturn(true);
 
         assertThrows(EmailOverlapException.class, ()->
             authService.join(userCreateDto)
@@ -70,16 +70,16 @@ public class AuthServiceTests {
     @Test
     @DisplayName("비밀번호 찾기 성공")
     public void findPasswordSuccessTest() {
-        Optional<User> returnUser = Optional.ofNullable(User.builder().email(email).password("test").id(id).build());
-        given(userRepository.findById(any())).willReturn(returnUser);
+        Optional<Member> returnUser = Optional.ofNullable(Member.builder().email(email).password("test").id(id).build());
+        given(memberRepository.findById(any())).willReturn(returnUser);
         authService.findPassword(email, id);
     }
 
     @Test
     @DisplayName("비밀번호 찾기 실패")
     public void findPasswordFailTest() {
-        Optional<User> returnUser = Optional.ofNullable(User.builder().email(email).password("test").id(id).build());
-        given(userRepository.findById(any())).willReturn(returnUser);
+        Optional<Member> returnUser = Optional.ofNullable(Member.builder().email(email).password("test").id(id).build());
+        given(memberRepository.findById(any())).willReturn(returnUser);
         assertThrows(EmailNotMatchIdException.class, () ->
                 authService.findPassword(email, "test_not_id")
         );
@@ -91,11 +91,11 @@ public class AuthServiceTests {
         final String password = "test!1";
         final String encodePassword = passwordEncoder.encode(password);
 
-        Optional<User> returnUser = Optional.ofNullable(User.builder().email(email).password(encodePassword).id(id).build());
-        given(userRepository.findById(any())).willReturn(returnUser);
+        Optional<Member> returnUser = Optional.ofNullable(Member.builder().email(email).password(encodePassword).id(id).build());
+        given(memberRepository.findById(any())).willReturn(returnUser);
         given(passwordEncoder.matches(password, encodePassword)).willReturn(true);
 
-        TokenResponseDto res = authService.login(new UserLoginRequestDto(email, password));
+        TokenResponseDto res = authService.login(new MemberLoginRequestDto(email, password));
 
         assertNotNull(res);
     }

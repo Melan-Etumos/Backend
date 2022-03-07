@@ -1,8 +1,6 @@
 package com.dsm.me.model.user.service;
 
-import com.dsm.me.global.error.exceptions.EmailNotMatchIdException;
-import com.dsm.me.model.user.model.User;
-import com.dsm.me.model.user.model.UserRepository;
+import com.dsm.me.model.user.model.MemberRepository;
 import com.dsm.me.model.user.model.redis.Code;
 import com.dsm.me.model.user.model.redis.EmailCodeRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -23,7 +21,7 @@ public class EmailServiceTests {
     @Mock
     EmailCodeRepository codeRepository;
     @Mock
-    UserRepository userRepository;
+    MemberRepository memberRepository;
 
     @InjectMocks
     EmailService emailService;

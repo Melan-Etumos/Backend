@@ -1,7 +1,7 @@
 package com.dsm.me.model.user.controller;
 
-import com.dsm.me.model.user.dto.UserCreateRequestDto;
-import com.dsm.me.model.user.dto.UserLoginRequestDto;
+import com.dsm.me.model.user.dto.MemberCreateRequestDto;
+import com.dsm.me.model.user.dto.MemberLoginRequestDto;
 import com.dsm.me.model.user.service.AuthService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
@@ -30,7 +30,7 @@ public class AuthControllerTests {
     @Test
     @DisplayName("Join Success Test")
     public void joinTest() throws Exception {
-        String content = objectMapper.writeValueAsString(new UserCreateRequestDto("email@naver.com","password1!", "nickname"));
+        String content = objectMapper.writeValueAsString(new MemberCreateRequestDto("email@naver.com","password1!", "nickname"));
 
         mvc.perform(post("/users")
                 .content(content)
@@ -42,7 +42,7 @@ public class AuthControllerTests {
     @Test
     @DisplayName("@Email Error Test: 이메일 형식을 갖추고 있어야 한다")
     public void emailExceptionJoinTest() throws Exception {
-        String content = objectMapper.writeValueAsString(new UserCreateRequestDto("email.test","password1!", "nickname"));
+        String content = objectMapper.writeValueAsString(new MemberCreateRequestDto("email.test","password1!", "nickname"));
 
         mvc.perform(post("/users")
                 .content(content)
@@ -54,7 +54,7 @@ public class AuthControllerTests {
     @Test
     @DisplayName("Password Error Test: 숫자와 특수문자가 하나 이상 들어가야 한다")
     public void textPasswordJoinTest() throws Exception {
-        String content = objectMapper.writeValueAsString(new UserCreateRequestDto("email@naver.com","password1", "nickname"));
+        String content = objectMapper.writeValueAsString(new MemberCreateRequestDto("email@naver.com","password1", "nickname"));
 
         mvc.perform(post("/users")
                 .content(content)
@@ -66,7 +66,7 @@ public class AuthControllerTests {
     @Test
     @DisplayName("Nickname Error Test: 글자수가 1자 이상 25자 이하여야 한다")
     public void nicknameLengthJoinTest() throws Exception {
-        String content = objectMapper.writeValueAsString(new UserCreateRequestDto("email@naver.com","password1!", "가나다라마바사아자차카타파하갸냐댜랴먀뱌샤야쟈챠캬탸퍄햐"));
+        String content = objectMapper.writeValueAsString(new MemberCreateRequestDto("email@naver.com","password1!", "가나다라마바사아자차카타파하갸냐댜랴먀뱌샤야쟈챠캬탸퍄햐"));
 
         mvc.perform(post("/users")
                 .content(content)
@@ -89,7 +89,7 @@ public class AuthControllerTests {
     @Test
     @DisplayName("로그인ㅋ.ㅋ")
     public void loginSuccessTest() throws Exception {
-        String content = objectMapper.writeValueAsString(new UserLoginRequestDto("email@naver.com","password1!"));
+        String content = objectMapper.writeValueAsString(new MemberLoginRequestDto("email@naver.com","password1!"));
 
         mvc.perform(post("/auth")
                 .content(content)
@@ -101,7 +101,7 @@ public class AuthControllerTests {
     @Test
     @DisplayName("로그인ㅋ.ㅋ 실패: 비밀번호 형식 일치하지 않음")
     public void loginFailedTest() throws Exception {
-        String content = objectMapper.writeValueAsString(new UserLoginRequestDto("email@naver.com","password1"));
+        String content = objectMapper.writeValueAsString(new MemberLoginRequestDto("email@naver.com","password1"));
 
         mvc.perform(post("/auth")
                 .content(content)

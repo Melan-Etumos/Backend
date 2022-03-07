@@ -3,7 +3,7 @@ package com.dsm.me.model.user.dto;
 import lombok.Builder;
 
 @Builder
-public class UserPageResponseDto {
+public class MemberPageResponseDto {
     private final String nickname;
     private final String id;
     private final String profile;

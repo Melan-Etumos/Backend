@@ -1,10 +1,9 @@
 package com.dsm.me.model.user.controller;
 
 import com.dsm.me.model.user.dto.TokenResponseDto;
-import com.dsm.me.model.user.dto.UserCreateRequestDto;
-import com.dsm.me.model.user.dto.UserLoginRequestDto;
+import com.dsm.me.model.user.dto.MemberCreateRequestDto;
+import com.dsm.me.model.user.dto.MemberLoginRequestDto;
 import com.dsm.me.model.user.service.AuthService;
-import com.dsm.me.model.user.service.EmailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -19,12 +18,12 @@ public class AuthController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/users")
-    public void join(@RequestBody @Valid UserCreateRequestDto userCreateDto){
+    public void join(@RequestBody @Valid MemberCreateRequestDto userCreateDto){
         authService.join(userCreateDto); // 닉네임 필터 되면 좋을 듯 https://lcodea.tistory.com/23
     }
 
     @PostMapping("/auth")
-    public TokenResponseDto login(@RequestBody @Valid UserLoginRequestDto loginRequestDto){
+    public TokenResponseDto login(@RequestBody @Valid MemberLoginRequestDto loginRequestDto){
         return authService.login(loginRequestDto);
     }
 

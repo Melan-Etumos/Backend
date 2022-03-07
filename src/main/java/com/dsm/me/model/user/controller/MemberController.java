@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.constraints.Email;
 
 @RestController
-public class UserController {
+public class MemberController {
     @GetMapping("/user/{email}")
     public void userPage(@PathVariable @Email  String email){
 

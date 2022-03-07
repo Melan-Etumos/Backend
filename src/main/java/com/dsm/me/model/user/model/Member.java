@@ -17,8 +17,8 @@ import java.util.UUID;
 @NoArgsConstructor
 @Entity
 @Builder
-@Table(name = "users")
-public class User {
+@Table(name = "member")
+public class Member {
     @Id
     private String email;
     private String password;
