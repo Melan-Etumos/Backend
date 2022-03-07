@@ -28,7 +28,7 @@ public class EmailControllerTests {
     @DisplayName("email send success test")
     public void sendEmailCodeTest() throws Exception {
         String email = "test@naver.com";
-        mvc.perform(get("/email").param("email", email))
+        mvc.perform(get("/email/{email}", email))
                 .andExpect(status().isAccepted());
     }
 
@@ -36,7 +36,7 @@ public class EmailControllerTests {
     @DisplayName("email send failed test")
     public void sendEmailFailedTest() throws Exception {
         final String email = "test.com";
-        mvc.perform(get("/email").param("email", email))
+        mvc.perform(get("/email/{email}", email))
                 .andExpect(status().isBadRequest());
     }
 

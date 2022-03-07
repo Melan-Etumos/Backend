@@ -14,18 +14,18 @@ import javax.validation.constraints.Email;
 @RequiredArgsConstructor
 @RestController
 @Validated
-@RequestMapping("/email")
+@RequestMapping("/email/{email}")
 public class EmailController {
 
     private final EmailService emailService;
 
     @ResponseStatus(HttpStatus.ACCEPTED)
     @GetMapping
-    public void sendEmailCode(@RequestParam @Email String email) throws MessagingException {
+    public void sendEmailCode(@PathVariable @Email String email) throws MessagingException {
         emailService.sendEmailCode(email);
     }
 
-    @PostMapping("/{email}")
+    @PostMapping
     public boolean verificationCodeCheck(@PathVariable @Email final String email, @RequestBody final CodeCheckRequestDto dto){
         return emailService.verificationCodeCheck(email, dto.getCode());
     }
