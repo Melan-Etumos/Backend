@@ -5,7 +5,7 @@ spring:
   datasource:
     driver-class-name: org.postgresql.Driver
     url: ${DATABASE_URL:}
-    username: ${DATABSE_USER:}
+    username: ${DATABSE_USER:postgres}
     password: ${DATABASE_PASSWORD:}
 
 
@@ -30,10 +30,11 @@ spring:
   redis:
     host: ${REDIS_HOST:}
     password: ${REDIS_PASSWORD}
+    port: 6379
 
 user:
   profile: ${USER_PROFILE:}
-  hax: ${H_BASIC:}
+  hax: ${USER_BACKGROUND:000000}
 
 
 auth:
