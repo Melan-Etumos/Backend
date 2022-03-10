@@ -5,7 +5,7 @@ spring:
   datasource:
     driver-class-name: org.postgresql.Driver
     url: ${DATABASE_URL:}
-    username: ${DATABSE_USER:}
+    username: postgres
     password: ${DATABASE_PASSWORD:}
 
 
@@ -40,4 +40,7 @@ user:
 auth:
   jwt:
     secret: ${JWT_SECRET_KEY:}
-    header: BEAREA
+    header: ${Authorization}
+    type: ${Bearer}
+    access_time: 3600
+    secureate_time: 10000
