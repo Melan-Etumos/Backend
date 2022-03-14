@@ -1,9 +1,9 @@
 package com.dsm.me.global.error.exceptions.token;
 
-import com.dsm.me.global.error.BasicException;
-import com.dsm.me.global.error.ErrorCode;
+import lombok.Getter;
 
 
+@Getter
 public class TokenException extends RuntimeException {
     private final TokenErrorCode errorCode;
     public TokenException(TokenErrorCode errorCode) {
