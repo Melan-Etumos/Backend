@@ -5,6 +5,7 @@ import com.dsm.me.global.mail.MailContent;
 import com.dsm.me.global.mail.MailHandler;
 import com.dsm.me.global.mail.MailReceiver;
 import com.dsm.me.global.security.token.JwtUtil;
+import com.dsm.me.model.user.dto.AccessTokenResponseDto;
 import com.dsm.me.model.user.dto.TokenResponseDto;
 import com.dsm.me.model.user.dto.MemberCreateRequestDto;
 import com.dsm.me.model.user.dto.MemberLoginRequestDto;
@@ -81,5 +82,9 @@ public class AuthService {
         }
 
         mailHandler.sendMail();
+    }
+
+    public AccessTokenResponseDto tokenRefresh(String refreshToken){
+        return new AccessTokenResponseDto();
     }
 }

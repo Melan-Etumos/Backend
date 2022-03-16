@@ -4,11 +4,14 @@ import com.dsm.me.global.error.exceptions.EmailNotMatchIdException;
 import com.dsm.me.global.error.exceptions.EmailOverlapException;
 import com.dsm.me.global.mail.MailHandler;
 import com.dsm.me.global.security.token.JwtUtil;
+import com.dsm.me.model.user.dto.AccessTokenResponseDto;
 import com.dsm.me.model.user.dto.TokenResponseDto;
 import com.dsm.me.model.user.dto.MemberCreateRequestDto;
 import com.dsm.me.model.user.dto.MemberLoginRequestDto;
 import com.dsm.me.model.user.model.Member;
 import com.dsm.me.model.user.model.MemberRepository;
+import com.dsm.me.model.user.model.redis.RefreshToken;
+import com.dsm.me.model.user.model.redis.RefreshTokenRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -31,6 +34,9 @@ public class AuthServiceTests {
 
     @Mock
     private PasswordEncoder passwordEncoder;
+
+    @Mock
+    private RefreshTokenRepository tokenRepository;
 
     @Mock
     private MailHandler mailHandler;
@@ -96,6 +102,19 @@ public class AuthServiceTests {
         given(passwordEncoder.matches(password, encodePassword)).willReturn(true);
 
         TokenResponseDto res = authService.login(new MemberLoginRequestDto(email, password));
+
+        assertNotNull(res);
+    }
+
+    @Test
+    @DisplayName("token refresh success")
+    public void tokenRefresh(){
+        String token = "tokenTest";
+        given(jwtUtil.getAuthentication(token).getName()).willReturn("testUser");
+        Optional<RefreshToken> returnUser = Optional.ofNullable(RefreshToken.builder().email("testUser").refreshToken(token).build());
+        given(tokenRepository.findById("testUser")).willReturn(returnUser);
+
+        AccessTokenResponseDto res = authService.tokenRefresh(token);
 
         assertNotNull(res);
     }
